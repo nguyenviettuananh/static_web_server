@@ -28,7 +28,7 @@ function crawl_comic(link,id1,id2,id3){
             var $ = cheerio.load(html);
             var i = $(id1);
             var i3 = i[Math.floor((Math.random() * i.length) + 1)].attribs;
-            var title = print(slug(i3.title.replace(/ /g,"_")));
+            var title = slug(i3.title.replace(/ /g,"_"));
             fs.exists(__dirname+'/public/img/'+title,function(exists){
                 if(!exists){
                     fs.mkdir(__dirname+'/public/img/'+title,function(err){
@@ -41,7 +41,7 @@ function crawl_comic(link,id1,id2,id3){
                 var $ = cheerio.load(html);
                 var i = $(id2);
                 var i3 = i[Math.floor((Math.random() * i.length) + 1)].attribs;
-                var chap = print(slug(i3.title.replace(/ /g,"_")));
+                var chap = slug(i3.title.replace(/ /g,"_"));
                 fs.exists(__dirname+'/public/img/'+title+"/"+chap,function(exists){
                     if(!exists) {
                         fs.mkdir(__dirname + '/public/img/' + title + "/" + chap, function (err) {
@@ -56,14 +56,14 @@ function crawl_comic(link,id1,id2,id3){
                             var img = i[j].attribs.src;
                             console.time('download');
                             request.get(img)
-                                .on('error', function(err) {
-                                    console.log('Download error', err);
-                                })
-                                .pipe(fs.createWriteStream(__dirname+'/public/img/'+title+"/"+chap+"/"+url.parse(img).pathname.split('/').pop())
-                                    .on('finish', function(){
-                                        console.timeEnd('download');
-                                        console.log('Done write to file');
-                                    }).on('error', function(err){
+                                        .on('error', function(err) {
+                                            console.log('Download error', err);
+                                        })
+                                        .pipe(fs.createWriteStream(__dirname+'/public/img/'+title+"/"+chap+"/"+url.parse(img).pathname.split('/').pop())
+                                            .on('finish', function(){
+                                                console.timeEnd('download');
+                                                console.log('Done write to file');
+                                            }).on('error', function(err){
                                         console.log('Error write to file: ', err);
                                     })
                             );

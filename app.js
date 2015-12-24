@@ -8,7 +8,7 @@ var http = require('http'),
     mime = require('mime'),
     fs = require('fs'),
     path = require('path'),
-    baseDir = './public';
+    baseDir = '.';
 var slug = require('slug');
 var print = console.log.bind(console, '>');
 // Create res404 function
